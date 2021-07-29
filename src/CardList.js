@@ -125,6 +125,7 @@ export class CardList extends React.Component {
       maxHeight={this.state.maxHeight}
       selected={this.state.selected.get(item.id)}
       heightDuration={this.props.duration}
+      navigation={this.props.navigation}
     />  
 
   render() {
