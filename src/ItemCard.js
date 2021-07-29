@@ -9,6 +9,8 @@ import {
   TouchableWithoutFeedback
 } from 'react-native';
 import PropTypes from 'prop-types';
+import { withNavigation } from 'react-navigation';
+
 
 export class ItemCard extends React.Component {
 
@@ -48,29 +50,31 @@ export class ItemCard extends React.Component {
 
   }
 
-  _onPresIn = () => {
+  // _onPresIn = () => {
 
-    if (this.props.selected) {
-      return;
-    }
+  //   if (this.props.selected) {
+  //     return;
+  //   }
 
-    Animated.timing(this.state.scaleAnim, {
-      toValue: this.props.shrinkTo || 0.96,
-      duration: this.props.shrinkDuration || 200,
-    }).start()
-  }
+  //   Animated.timing(this.state.scaleAnim, {
+  //     toValue: this.props.shrinkTo || 0.96,
+  //     duration: this.props.shrinkDuration || 1000,
+  //   }).start()
+  // }
 
-  _onPressOut = () => {
+  // _onPressOut = () => {
 
-    if (this.props.selected) {
-      return;
-    }
+  //   if (this.props.selected) {
+  //     return;
+  //   }
 
-    Animated.timing(this.state.scaleAnim, {
-      toValue: 1,
-      duration: this.props.shrinkDuration || 200,
-    }).start()
-  }
+  //   Animated.timing(this.state.scaleAnim, {
+  //     toValue: 1,
+  //     duration: this.props.shrinkDuration || 200,
+  //   }).start()
+  // }
+
+  
 
   componentWillReceiveProps(nextProps) {
 
@@ -91,12 +95,11 @@ export class ItemCard extends React.Component {
   }
 
   render() {
+    const onPress = () => this.props.navigation.navigate('Details');
+    const productImage = {uri: this.props.picture};
     return (
       <TouchableOpacity
-        activeOpacity={this.props.activeOpacity || 0.8}
-        onPressIn={this._onPresIn}
-        onPressOut={this._onPressOut}
-        onPress={this.props.onPress}
+        onPress={onPress} 
       >
 
         <Animated.View
@@ -113,7 +116,7 @@ export class ItemCard extends React.Component {
           <ImageBackground
             onLayout={this.props.onLayout}
             borderRadius={this.props.selected ? 0 : (this.props.borderRadius || 10)}
-            source={this.props.picture}
+            source={productImage}
             style={[
               styles.image,
               { height: this.props.height || 200 }
@@ -139,7 +142,7 @@ export class ItemCard extends React.Component {
           {
             this.props.selected ?
               <View style={{flex: 1, padding: 20}}>
-                {this.props.content || <Text>COntent!</Text>}
+                {this.props.content || <Text>Content!</Text>}
               </View> : null
           }
         </Animated.View>
@@ -155,23 +158,25 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     borderRadius: 10,
-    backgroundColor: 'rgb(240, 240, 240)',    
+    justifyContent: 'center',
+    backgroundColor: '#fff',  
     margin: 20,
     padding: 0
   },
   image: {
-    width: undefined,
+    width: 200,
     height: 200,
+    marginLeft: 50, 
     padding: 20,
     margin: 0,
     flexDirection: 'row',
     alignItems: 'flex-end'
   },
   text: {
-    backgroundColor: 'transparent',
-    color: 'white',
-    fontWeight: '700',
-    fontSize: 44
+    color: '#5a647d',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: 20
   }
 
 });
